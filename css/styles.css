@@ -1,0 +1,28 @@
+@import './modules/calculator.css';
+
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.wrapper {
+  min-height: 100vh;
+  background: linear-gradient(to right, #00aaff, #00ff6c);
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.calculator-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-block: 40px;
+}
