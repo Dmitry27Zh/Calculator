@@ -1,7 +1,7 @@
 .calculator {
   --fz: min(4vw, 20px);
   --basic-transition: 0.3s ease-in;
-  --screen-height: 6em;
+  --screen-height: 10em;
   --screen-bg: rgba(0, 0, 0, 0.75);
   --expression-pad: 5%;
   --expression-fz: 1.5em;
@@ -29,6 +29,11 @@
   align-items: flex-end;
   word-break: break-all;
   background: var(--screen-bg);
+}
+
+.calculator__screen-line {
+  display: flex;
+  align-items: center;
 }
 
 .calculator__expression {
