@@ -63,10 +63,14 @@
   cursor: pointer;
 }
 
-.calculator__btn:is(:hover, :focus) {
+.calculator__btn:is(:hover, :focus-visible) {
   background: var(--btn-bg-accent);
 }
 
 .calculator__btn.calculator__btn--span {
   grid-column: span 2;
+}
+
+[data-calculator] * {
+  pointer-events: none;
 }
