@@ -1,14 +1,20 @@
 .calculator {
-  --fz: 20px;
+  --fz: min(4vw, 20px);
   --basic-transition: 0.3s ease-in;
   --screen-height: 6em;
   --screen-bg: rgba(0, 0, 0, 0.75);
+  --expression-pad: 5%;
+  --expression-fz: 1.5em;
+  --expression-color: rgba(255, 255, 255, 0.75);
+  --result-pad: 5%;
+  --result-fz: 2.5em;
+  --result-color: #ffffff;
   --btn-width: 5em;
   --btn-height: 5em;
   --btn-bg: rgba(255, 255, 255, 0.75);
   --btn-bg-accent: rgba(255, 255, 255, 0.9);
   --btn-border: 1px solid #ffffff;
-  display: inline-grid;
+  display: grid;
   grid-template-columns: repeat(4, var(--btn-width));
   grid-template-rows: minmax(var(--screen-height), auto) repeat(5, var(--btn-height));
   margin: 0 auto;
@@ -18,7 +24,25 @@
 
 .calculator__screen {
   grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  word-break: break-all;
   background: var(--screen-bg);
+}
+
+.calculator__expression {
+  flex: 1 1 0;
+  padding: var(--expression-pad);
+  font-size: var(--expression-fz);
+  color: var(--expression-color);
+}
+
+.calculator__result {
+  flex: 1 1 0;
+  padding: var(--result-pad);
+  font-size: var(--result-fz);
+  color: var(--result-color);
 }
 
 .calculator__btn {
@@ -32,7 +56,6 @@
   background: var(--btn-bg);
   border: var(--btn-border);
   cursor: pointer;
-  transition: background var(--basic-transition);
 }
 
 .calculator__btn:is(:hover, :focus) {
