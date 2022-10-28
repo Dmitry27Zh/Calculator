@@ -1,7 +1,7 @@
 class Calculator {
   constructor(element, screen) {
-    this._expression = null
-    this._result = null
+    this._expression = ''
+    this._result = ''
     this.element = null
     this.screen = {}
     this.init(element, screen)
@@ -27,27 +27,34 @@ class Calculator {
     })
   }
 
-  work(action, value) {
-    switch (action) {
-      case Attribute.SYMBOL:
-        this._appendSymbol(value)
-        break
-      case Attribute.OPERATION:
-        this._compute(value)
-        break
-      case Attribute.DELETE:
-        this._delete()
-        break
-      case Attribute.CLEAR:
-        this._clear()
-        break
-    }
-
-    this._updateScreen()
+  get expression() {
+    return this._expression
   }
 
-  _appendSymbol(symbol) {
-    alert('Append Symbol ' + symbol)
+  set expression(expression) {
+    this._expression = expression
+    this.screen.expressionOutput.textContent = this._expression
+  }
+
+  work(action, value) {
+    let expression = this.expression
+
+    switch (action) {
+      case Attribute.SYMBOL:
+      case Attribute.OPERATION:
+        expression += value
+        break
+      case Attribute.DELETE:
+        expression = expression.slice(0, -1)
+        break
+      case Attribute.CLEAR:
+        expression = ''
+        break
+      default:
+        throw new Error('Unknown action!')
+    }
+
+    this.expression = expression
   }
 
   _compute(operation) {
@@ -60,10 +67,6 @@ class Calculator {
 
   _clear() {
     alert('Clear')
-  }
-
-  _updateScreen() {
-    alert('Update screen')
   }
 }
 
