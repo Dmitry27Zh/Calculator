@@ -35,7 +35,7 @@ class Calculator {
     if (!/\D\D$/.test(expression)) {
       this._expression = expression
       this.screen.expressionOutput.textContent = formatExpression(this._expression)
-      Calculator.calculate(this.expression)
+      console.log(Calculator.calculate(this.expression))
     }
   }
 
@@ -61,10 +61,26 @@ class Calculator {
   }
 
   static calculate(expression) {
+    expression = expression.replace(/\D$/, '')
     const operands = expression.split(/\D+/).filter(Boolean).map(Number)
     const operators = expression.split(/\d+/).filter(Boolean)
-    console.log('Operands', operands)
-    console.log('Operators', operators)
+
+    return operators.reduce((operandA, operator) => {
+      const operandB = operands.shift()
+
+      switch (operator) {
+        case '+':
+          return operandA + operandB
+        case '-':
+          return operandA - operandB
+        case 'x':
+          return operandA * operandB
+        case '÷':
+          return operandA / operandB
+        default:
+          throw new Error('Unsupported operator!')
+      }
+    }, operands.shift())
   }
 }
 
