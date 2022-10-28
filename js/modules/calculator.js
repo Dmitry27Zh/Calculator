@@ -35,6 +35,7 @@ class Calculator {
     if (!/\D\D$/.test(expression)) {
       this._expression = expression
       this.screen.expressionOutput.textContent = formatExpression(this._expression)
+      Calculator.calculate(this.expression)
     }
   }
 
@@ -59,16 +60,11 @@ class Calculator {
     this.expression = expression
   }
 
-  _compute(operation) {
-    alert('Compute ' + operation)
-  }
-
-  _delete() {
-    alert('Delete')
-  }
-
-  _clear() {
-    alert('Clear')
+  static calculate(expression) {
+    const operands = expression.split(/\D+/).filter(Boolean).map(Number)
+    const operators = expression.split(/\d+/).filter(Boolean)
+    console.log('Operands', operands)
+    console.log('Operators', operators)
   }
 }
 
