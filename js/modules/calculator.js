@@ -33,7 +33,7 @@ class Calculator {
 
   set expression(expression) {
     this._expression = expression
-    this.screen.expressionOutput.textContent = this._expression
+    this.screen.expressionOutput.textContent = formatExpression(this._expression)
   }
 
   work(action, value) {
@@ -100,6 +100,10 @@ const checkScreen = (screen) => {
 
 const createElement = (hasScreen) => {
   console.log(hasScreen)
+}
+
+const formatExpression = (expression) => {
+  return expression.replace(/\D+/g, ' $& ')
 }
 
 export { Calculator }
