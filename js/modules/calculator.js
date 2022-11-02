@@ -79,6 +79,7 @@ class Calculator {
       .filter(Boolean)
       .map(Number)
     const operators = expression.split(/[.\d]+/).filter(Boolean)
+    const defaultOperand = operands.shift() ?? ''
 
     return operators
       .reduce((operandA, operator) => {
@@ -96,7 +97,7 @@ class Calculator {
           default:
             throw new Error('Unsupported operator!')
         }
-      }, operands.shift())
+      }, defaultOperand)
       .toString()
   }
 }
