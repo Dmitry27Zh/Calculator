@@ -35,8 +35,17 @@ class Calculator {
     if (!/\D\D$/.test(expression)) {
       this._expression = expression
       this.screen.expressionOutput.textContent = formatExpression(this._expression)
-      console.log(Calculator.calculate(this.expression))
+      this._setResult()
     }
+  }
+
+  get result() {
+    return this._result
+  }
+
+  _setResult() {
+    this._result = Calculator.calculate(this.expression)
+    this.screen.resultOutput.textContent = this.result
   }
 
   work(action, value) {
@@ -62,8 +71,11 @@ class Calculator {
 
   static calculate(expression) {
     expression = expression.replace(/\D$/, '')
-    const operands = expression.split(/\D+/).filter(Boolean).map(Number)
-    const operators = expression.split(/\d+/).filter(Boolean)
+    const operands = expression
+      .split(/[^.\d]+/)
+      .filter(Boolean)
+      .map(Number)
+    const operators = expression.split(/[.\d]+/).filter(Boolean)
 
     return operators.reduce((operandA, operator) => {
       const operandB = operands.shift()
@@ -117,7 +129,7 @@ const createElement = (hasScreen) => {
 }
 
 const formatExpression = (expression) => {
-  return expression.replace(/\D+/g, ' $& ').trim()
+  return expression.replace(/[^.\d]+/g, ' $& ').trim()
 }
 
 export { Calculator }
