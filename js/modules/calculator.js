@@ -62,6 +62,9 @@ class Calculator {
       case Attribute.CLEAR:
         expression = ''
         break
+      case Attribute.EQUALS:
+        expression = this.result
+        break
       default:
         throw new Error('Unknown action!')
     }
@@ -77,22 +80,24 @@ class Calculator {
       .map(Number)
     const operators = expression.split(/[.\d]+/).filter(Boolean)
 
-    return operators.reduce((operandA, operator) => {
-      const operandB = operands.shift()
+    return operators
+      .reduce((operandA, operator) => {
+        const operandB = operands.shift()
 
-      switch (operator) {
-        case '+':
-          return operandA + operandB
-        case '-':
-          return operandA - operandB
-        case 'x':
-          return operandA * operandB
-        case '÷':
-          return operandA / operandB
-        default:
-          throw new Error('Unsupported operator!')
-      }
-    }, operands.shift())
+        switch (operator) {
+          case '+':
+            return operandA + operandB
+          case '-':
+            return operandA - operandB
+          case 'x':
+            return operandA * operandB
+          case '÷':
+            return operandA / operandB
+          default:
+            throw new Error('Unsupported operator!')
+        }
+      }, operands.shift())
+      .toString()
   }
 }
 
