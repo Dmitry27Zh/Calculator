@@ -84,6 +84,7 @@ class Calculator {
     const parts = expression.split(' ')
     const operands = parts.filter(Boolean).map(Number).filter(isFinite)
     const operators = parts.filter(isNaN)
+    operators.splice(operands.length - 1)
     const defaultOperand = operands.shift() ?? ''
 
     return operators
@@ -145,7 +146,7 @@ const createElement = (hasScreen) => {
 }
 
 const formatExpression = (expression) => {
-  return expression.replace(/^-?[\d.]+|[\d.]+/g, ' $& ').trim()
+  return expression.replace(...Reg.OPERATORS_REPLACEMENT).trim()
 }
 
 window.Calculator = Calculator
