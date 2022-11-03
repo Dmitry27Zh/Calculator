@@ -45,7 +45,7 @@ class Calculator {
 
   _setResult() {
     this._result = Calculator.calculate(this.expression)
-    this.screen.resultOutput.textContent = this.result
+    this.screen.resultOutput.textContent = formatResult(this.result)
   }
 
   work(action, value) {
@@ -147,6 +147,14 @@ const createElement = (hasScreen) => {
 
 const formatExpression = (expression) => {
   return expression.replace(...Reg.OPERATORS_REPLACEMENT).trim()
+}
+
+const formatResult = (result) => {
+  result = +result
+
+  return result.toLocaleString('en', {
+    maximumFractionDigits: 4,
+  })
 }
 
 window.Calculator = Calculator
