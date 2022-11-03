@@ -79,7 +79,7 @@ class Calculator {
 
     expression = expression
       .replace(/\D$/, '')
-      .replace(/([\d.])([^\d.])/g, '$1 $2 ')
+      .replace(...Reg.OPERATORS_REPLACEMENT)
       .trim()
     const parts = expression.split(' ')
     const operands = parts.filter(Boolean).map(Number).filter(isFinite)
@@ -119,6 +119,7 @@ const Attribute = {
 
 const Reg = {
   VALID_EXPRESSION: /^(-?\d*(\.\d*)?|(-?\d+(\.\d*)?[^\d.](-?\d*(\.\d*)?)?)*)?$/,
+  OPERATORS_REPLACEMENT: [/([\d.])([^\d.])/g, '$1 $2 '],
 }
 
 const getScreen = (element) => {
