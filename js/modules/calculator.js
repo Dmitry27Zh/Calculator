@@ -32,7 +32,8 @@ class Calculator {
   }
 
   set expression(expression) {
-    if (!/\D\D$/.test(expression)) {
+    if (Reg.VALID_EXPRESSION.test(expression)) {
+      console.log('valid', expression)
       this._expression = expression
       this.screen.expressionOutput.textContent = formatExpression(this._expression)
       this._setResult()
@@ -73,12 +74,17 @@ class Calculator {
   }
 
   static calculate(expression) {
-    expression = expression.replace(/\D$/, '')
-    const operands = expression
-      .split(/[^.\d]+/)
-      .filter(Boolean)
-      .map(Number)
-    const operators = expression.split(/[.\d]+/).filter(Boolean)
+    if (!Reg.VALID_EXPRESSION.test(expression)) {
+      throw new Error('Invalid expression!')
+    }
+    expression = expression
+      .replace(/\D$/, '')
+      .replace(/(-?\d+(?:\.\d*)?)([^\d.])?/g, '$1 $2 ')
+      .trim()
+    const parts = expression.split(' ')
+    console.log(parts)
+    const operands = parts.map(Number).filter(Boolean)
+    const operators = parts.filter(isNaN)
     const defaultOperand = operands.shift() ?? ''
 
     return operators
@@ -112,6 +118,10 @@ const Attribute = {
   CLEAR: 'clear',
 }
 
+const Reg = {
+  VALID_EXPRESSION: /^(-?\d+(\.\d*)?)?([^\d.]|([^\d.]-?\d+(\.\d*)?[^\d.]?)*)$/,
+}
+
 const getScreen = (element) => {
   return {
     expressionOutput: element.querySelector(`[data-action=${Attribute.EXPRESSION_OUTPUT}]`),
@@ -135,7 +145,9 @@ const createElement = (hasScreen) => {
 }
 
 const formatExpression = (expression) => {
-  return expression.replace(/[^.\d]+/g, ' $& ').trim()
+  return expression.replace(/^-?[\d.]+|[\d.]+/g, ' $& ').trim()
 }
+
+window.Calculator = Calculator
 
 export { Calculator }
