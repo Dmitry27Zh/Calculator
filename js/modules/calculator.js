@@ -33,7 +33,6 @@ class Calculator {
 
   set expression(expression) {
     if (Reg.VALID_EXPRESSION.test(expression)) {
-      console.log('valid', expression)
       this._expression = expression
       this.screen.expressionOutput.textContent = formatExpression(this._expression)
       this._setResult()
@@ -77,13 +76,13 @@ class Calculator {
     if (!Reg.VALID_EXPRESSION.test(expression)) {
       throw new Error('Invalid expression!')
     }
+
     expression = expression
       .replace(/\D$/, '')
-      .replace(/(-?\d+(?:\.\d*)?)([^\d.])?/g, '$1 $2 ')
+      .replace(/([^\d.])(-?\d+)?/g, ' $1 $2')
       .trim()
     const parts = expression.split(' ')
-    console.log(parts)
-    const operands = parts.map(Number).filter(Boolean)
+    const operands = parts.filter(Boolean).map(Number).filter(isFinite)
     const operators = parts.filter(isNaN)
     const defaultOperand = operands.shift() ?? ''
 
@@ -101,7 +100,7 @@ class Calculator {
           case '÷':
             return operandA / operandB
           default:
-            throw new Error('Unsupported operator!')
+            throw new Error(`Unsupported operator: ${operator}`)
         }
       }, defaultOperand)
       .toString()
@@ -119,7 +118,7 @@ const Attribute = {
 }
 
 const Reg = {
-  VALID_EXPRESSION: /^(-?\d+(\.\d*)?)?([^\d.]|([^\d.]-?\d+(\.\d*)?[^\d.]?)*)$/,
+  VALID_EXPRESSION: /^(-?\d+(\.\d*)?)([^\d.]|([^\d.]-?\d+(\.\d*)?[^\d.]?)*)|$/,
 }
 
 const getScreen = (element) => {
