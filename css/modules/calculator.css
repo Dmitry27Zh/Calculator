@@ -64,6 +64,10 @@
   cursor: pointer;
 }
 
+.calculator__btn:focus {
+  outline: none;
+}
+
 .calculator__btn:is(:hover, :focus-visible) {
   background: var(--btn-bg-accent);
 }
