@@ -1,22 +1,23 @@
 class Calculator {
-  constructor(element, screen) {
+  constructor(element, screen, settings = defaultSettings) {
     this._expression = ''
     this._result = ''
     this.element = null
     this.screen = {}
-    this.init(element, screen)
+    this.init(element, screen, settings)
   }
 
-  init(element, screen) {
+  init(element, screen, settings) {
     handleError(() => {
-      this._getElements(element, screen)
+      this._getElements(element, screen, settings)
       this._addListeners()
     }, ErrorMessage.GLOBAL.pre)
   }
 
-  _getElements(element, screen) {
-    const hasScreen = !!screen
-    this.element = element ?? createElement(hasScreen)
+  _getElements(element, screen, settings) {
+    const { container } = settings
+    const isExternalScreen = !!screen
+    this.element = element ?? createElement(isExternalScreen, container)
     this.screen = screen ?? getScreen(this.element)
     checkScreen(this.screen)
   }
@@ -136,6 +137,8 @@ const ErrorMessage = {
   },
 }
 
+const defaultSettings = {}
+
 const getScreen = (element) => {
   return {
     expressionOutput: element.querySelector(`[data-action=${Attribute.EXPRESSION_OUTPUT}]`),
@@ -154,8 +157,73 @@ const checkScreen = (screen) => {
   }
 }
 
-const createElement = (hasScreen) => {
-  console.log(hasScreen)
+const createElement = (isExternalScreen, container) => {
+  const screen = isExternalScreen
+    ? ''
+    : `<div class="calculator__screen">
+        <div class="calculator__screen-line calculator__expression" data-action="expression"></div>
+        <div class="calculator__screen-line calculator__result" data-action="result"></div>
+      </div>`
+  const html = `
+    <div class="calculator">
+      ${screen}
+      <button class="calculator__btn calculator__btn--span" type="button" data-action="clear">
+        AC
+      </button>
+      <button class="calculator__btn" type="button" data-action="delete">
+        DEL
+      </button>
+      <button class="calculator__btn" type="button" data-action="operation">
+        ÷
+      </button>
+      <button class="calculator__btn" type="button" data-action="symbol">
+        1
+      </button>
+      <button class="calculator__btn" type="button" data-action="symbol">
+        2
+      </button>
+      <button class="calculator__btn" type="button" data-action="symbol">
+        3
+      </button>
+      <button class="calculator__btn" type="button" data-action="operation">
+        x
+      </button>
+      <button class="calculator__btn" type="button" data-action="symbol">
+        4
+      </button>
+      <button class="calculator__btn" type="button" data-action="symbol">
+        5
+      </button>
+      <button class="calculator__btn" type="button" data-action="symbol">
+        6
+      </button>
+      <button class="calculator__btn" type="button" data-action="operation">
+        +
+      </button>
+      <button class="calculator__btn" type="button" data-action="symbol">
+        7
+      </button>
+      <button class="calculator__btn" type="button" data-action="symbol">
+        8
+      </button>
+      <button class="calculator__btn" type="button" data-action="symbol">
+        9
+      </button>
+      <button class="calculator__btn" type="button" data-action="operation">
+        -
+      </button>
+      <button class="calculator__btn" type="button" data-action="symbol">
+        .
+      </button>
+      <button class="calculator__btn" type="button" data-action="symbol">
+        0
+      </button>
+      <button class="calculator__btn calculator__btn--span" type="button" data-action="equals">
+        =
+      </button>
+    </div>`
+  container.innerHTML = html
+  return container.firstElementChild
 }
 
 const formatExpression = (expression) => {
@@ -174,7 +242,7 @@ const handleError = (cb, msg = '') => {
   try {
     cb()
   } catch (err) {
-    msg = `${msg} ${err.message}`.trim()
+    msg = `${msg} ${err.message} on ${err.stack}`.trim()
     alert(msg)
   }
 }
