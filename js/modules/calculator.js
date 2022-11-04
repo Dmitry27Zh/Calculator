@@ -8,8 +8,10 @@ class Calculator {
   }
 
   init(element, screen) {
-    this._getElements(element, screen)
-    this._addListeners()
+    handleError(() => {
+      this._getElements(element, screen)
+      this._addListeners()
+    }, ErrorMessage.GLOBAL.pre)
   }
 
   _getElements(element, screen) {
@@ -21,9 +23,11 @@ class Calculator {
 
   _addListeners() {
     this.element.addEventListener('click', ({ target }) => {
-      const action = target.getAttribute('data-action')
-      const value = target.textContent
-      this.work(action, value)
+      handleError(() => {
+        const action = target.getAttribute('data-action')
+        const value = target.textContent
+        this.work(action, value)
+      })
     })
   }
 
@@ -66,7 +70,7 @@ class Calculator {
         expression = this.result
         break
       default:
-        throw new Error('Unknown action!')
+        throw new Error(ErrorMessage.ACTION.main)
     }
 
     this.expression = expression
@@ -119,8 +123,17 @@ const Attribute = {
 }
 
 const Reg = {
-  VALID_EXPRESSION: /^(-?\d*(\.\d*)?|(-?\d+(\.\d*)?[^\d.](-?\d*(\.\d*)?)?)*)?$/,
+  VALID_EXPRESSION: /^(-?|-?\d+(\.\d*)?|(-?\d+(\.\d*)?[^\d.]-?)*|(-?\d+(\.\d*)?[^\d.](-?\d+(\.\d*)?)?)*)?$/,
   OPERATORS_REPLACEMENT: [/([\d.])([^\d.])/g, '$1 $2 '],
+}
+
+const ErrorMessage = {
+  GLOBAL: {
+    pre: 'Unknown error in the Calculator:',
+  },
+  ACTION: {
+    main: 'Unknown action!',
+  },
 }
 
 const getScreen = (element) => {
@@ -155,6 +168,15 @@ const formatResult = (result) => {
   return result.toLocaleString('en', {
     maximumFractionDigits: 4,
   })
+}
+
+const handleError = (cb, msg = '') => {
+  try {
+    cb()
+  } catch (err) {
+    msg = `${msg} ${err.message}`.trim()
+    alert(msg)
+  }
 }
 
 window.Calculator = Calculator
