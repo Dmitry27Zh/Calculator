@@ -1,9 +1,10 @@
 class Calculator {
-  constructor(element, screen, settings = defaultSettings) {
+  constructor(element, screen, settings = {}) {
     this._expression = ''
     this._result = ''
     this.element = null
     this.screen = {}
+    this._settings = { ...defaultSettings, ...settings }
     this.init(element, screen, settings)
   }
 
@@ -49,8 +50,9 @@ class Calculator {
   }
 
   _setResult() {
+    const { maximumFractionDigits } = this._settings
     this._result = Calculator.calculate(this.expression)
-    this.screen.resultOutput.textContent = formatResult(this.result)
+    this.screen.resultOutput.textContent = formatResult(this.result, maximumFractionDigits)
   }
 
   work(action, value) {
@@ -137,7 +139,9 @@ const ErrorMessage = {
   },
 }
 
-const defaultSettings = {}
+const defaultSettings = {
+  maximumFractionDigits: 4,
+}
 
 const getScreen = (element) => {
   return {
@@ -230,11 +234,12 @@ const formatExpression = (expression) => {
   return expression.replace(...Reg.OPERATORS_REPLACEMENT).trim()
 }
 
-const formatResult = (result) => {
+const formatResult = (result, maximumFractionDigits) => {
   result = +result
+  console.log(maximumFractionDigits)
 
   return result.toLocaleString('en', {
-    maximumFractionDigits: 4,
+    maximumFractionDigits,
   })
 }
 
