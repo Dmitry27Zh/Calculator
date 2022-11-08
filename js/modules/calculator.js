@@ -26,7 +26,7 @@ class Calculator {
     this.element.addEventListener('click', ({ target }) => {
       handleError(() => {
         const action = target.getAttribute('data-action')
-        const value = target.textContent
+        const value = target.textContent.trim()
         this.work(action, value)
       })
     })
