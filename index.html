@@ -9,13 +9,9 @@
     <script src="./js/index.js" type="module"></script>
   </head>
   <body>
-    <div>
-      <div id="expression" data-action="expression"></div>
-      <div id="result" data-action="result"></div>
-    </div>
     <div class="wrapper">
       <div class="calculator-container container">
-        <!-- <div class="calculator">
+        <div class="calculator">
           <div class="calculator__screen">
             <div class="calculator__screen-line calculator__expression" data-action="expression"></div>
             <div class="calculator__screen-line calculator__result" data-action="result"></div>
@@ -40,7 +36,21 @@
             <button class="calculator__btn" type="button" data-action="symbol">0</button>
             <button class="calculator__btn calculator__btn--span" type="button" data-action="equals">=</button>
           </div>
-        </div> -->
+        </div>
+      </div>
+      <div class="area container">
+        <button class="area__button" id="dynamic-btn" type="button">Add dynamic calculator</button>
+        <div id="dynamic-container"></div>
+      </div>
+      <div class="area container">
+        <button class="area__button" id="dynamic-external-btn" type="button">
+          Add dynamic calculator with external screen
+        </button>
+        <div class="external-screen">
+          <div id="dynamic-external-expression" data-action="expression"></div>
+          <div id="dynamic-external-result" data-action="result"></div>
+        </div>
+        <div id="dynamic-external-container"></div>
       </div>
     </div>
   </body>
