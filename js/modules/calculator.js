@@ -133,8 +133,11 @@ const Reg = {
 }
 
 const ErrorMessage = {
-  GLOBAL: {
-    pre: 'Unknown error in the Calculator:',
+  UNKNOWN: {
+    pre: 'Please reload app! Unknown error in the Calculator',
+  },
+  KNOWN: {
+    pre: 'Please try again! Well-known error',
   },
   ELEMENT: {
     main: 'Lacks element!',
@@ -280,8 +283,8 @@ const handleError = (cb) => {
   try {
     cb()
   } catch (err) {
-    const msgPre = err.name === 'Error' ? err.message : `${ErrorMessage.GLOBAL.pre} ${err.message}`
-    const msg = `${msgPre.trim()} on ${err.stack}`
+    const msgPre = err.name === 'Error' ? ErrorMessage.KNOWN.pre : ErrorMessage.UNKNOWN.pre
+    const msg = `${msgPre.trim()} – on ${err.stack}`
     alert(msg)
   }
 }
