@@ -5,18 +5,18 @@ class Calculator {
     this.element = null
     this.screen = {}
     this._settings = { ...defaultSettings, ...settings }
-    this.init(element, screen, settings)
+    this.init(element, screen)
   }
 
-  init(element, screen, settings) {
+  init(element, screen) {
     handleError(() => {
-      this._getElements(element, screen, settings)
+      this._getElements(element, screen)
       this._addListeners()
     }, ErrorMessage.GLOBAL.pre)
   }
 
-  _getElements(element, screen, settings) {
-    const { container } = settings
+  _getElements(element, screen) {
+    const { container } = this._settings
     const isExternalScreen = !!screen
     this.element = element ?? createElement(isExternalScreen, container)
     this.screen = screen ?? getScreen(this.element)
@@ -140,6 +140,7 @@ const ErrorMessage = {
 }
 
 const defaultSettings = {
+  container: document.body,
   maximumFractionDigits: 4,
 }
 
@@ -248,6 +249,7 @@ const handleError = (cb, msg = '') => {
     cb()
   } catch (err) {
     msg = `${msg} ${err.message} on ${err.stack}`.trim()
+    console.log(err.name)
     alert(msg)
   }
 }
