@@ -13,7 +13,7 @@ class Calculator {
     handleError(() => {
       this._getElements(element, screen)
       this._addListeners()
-    }, ErrorMessage.GLOBAL.pre)
+    })
   }
 
   _getElements(element, screen) {
@@ -83,7 +83,7 @@ class Calculator {
 
   static calculate(expression) {
     if (!Reg.VALID_EXPRESSION.test(expression)) {
-      throw new Error('Invalid expression!')
+      throw new Error(ErrorMessage.EXPRESSION.main)
     }
 
     expression = expression
@@ -136,8 +136,20 @@ const ErrorMessage = {
   GLOBAL: {
     pre: 'Unknown error in the Calculator:',
   },
+  ELEMENT: {
+    main: 'Lacks element!',
+  },
+  SCREEN: {
+    main: 'Lacks screen output element!',
+  },
+  CONTROLS: {
+    main: 'Lacks controls element!',
+  },
   ACTION: {
     main: 'Unknown action!',
+  },
+  EXPRESSION: {
+    main: 'Invalid expression!',
   },
 }
 
@@ -157,11 +169,11 @@ const checkElements = (element, screen, controls) => {
   let errorMsg = ''
 
   if (!element) {
-    errorMsg = 'Lacks element!'
+    errorMsg = ErrorMessage.ELEMENT
   } else if (!checkScreen(screen)) {
-    errorMsg = 'Lacks screen output element!'
+    errorMsg = ErrorMessage.SCREEN
   } else if (!controls) {
-    errorMsg = 'Lacks controls element!'
+    errorMsg = ErrorMessage.CONTROLS
   }
 
   if (errorMsg) {
@@ -261,11 +273,12 @@ const formatResult = (result, maximumFractionDigits) => {
   })
 }
 
-const handleError = (cb, msg = '') => {
+const handleError = (cb) => {
   try {
     cb()
   } catch (err) {
-    msg = `${msg} ${err.message} on ${err.stack}`.trim()
+    const msgPre = err.name === 'Error' ? err.message : `${ErrorMessage.GLOBAL.pre} ${err.message}`
+    const msg = `${msgPre.trim()} on ${err.stack}`
     alert(msg)
   }
 }
