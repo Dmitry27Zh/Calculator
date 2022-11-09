@@ -15,19 +15,18 @@
   --btn-bg: rgba(255, 255, 255, 0.75);
   --btn-bg-accent: rgba(255, 255, 255, 0.9);
   --btn-border: 1px solid #ffffff;
-  display: inline-grid;
-  grid-template-columns: repeat(4, var(--btn-width));
-  grid-template-rows: minmax(var(--screen-height), auto) repeat(5, var(--btn-height));
+  width: calc(4 * var(--btn-width));
   margin: 0 auto;
   font-family: 'Gotham Rounded', sans-serif;
   font-size: var(--fz);
   background: var(--bg);
+  user-select: none;
 }
 
 .calculator__screen {
-  grid-column: 1 / -1;
   display: flex;
   flex-direction: column;
+  min-height: var(--screen-height);
   align-items: flex-end;
   word-break: break-all;
   background: var(--screen-bg);
@@ -50,6 +49,12 @@
   padding: var(--result-pad);
   font-size: var(--result-fz);
   color: var(--result-color);
+}
+
+.calculator__controls {
+  display: grid;
+  grid-template-columns: repeat(4, var(--btn-width));
+  grid-template-rows: repeat(5, var(--btn-height));
 }
 
 .calculator__btn {

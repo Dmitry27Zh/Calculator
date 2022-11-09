@@ -3,6 +3,7 @@ class Calculator {
     this._expression = ''
     this._result = ''
     this.element = null
+    this.controls = null
     this.screen = {}
     this._settings = { ...defaultSettings, ...settings }
     this.init(element, screen)
@@ -20,11 +21,12 @@ class Calculator {
     const isExternalScreen = !!screen
     this.element = element ?? createElement(isExternalScreen, container)
     this.screen = screen ?? getScreen(this.element)
+    this.controls = this.element.querySelector('.calculator__controls')
     checkScreen(this.screen)
   }
 
   _addListeners() {
-    this.element.addEventListener('click', ({ target }) => {
+    this.controls.addEventListener('click', ({ target }) => {
       handleError(() => {
         const action = target.getAttribute('data-action')
         const value = target.textContent.trim()
@@ -172,60 +174,62 @@ const createElement = (isExternalScreen, container) => {
   const html = `
     <div class="calculator">
       ${screen}
-      <button class="calculator__btn calculator__btn--span" type="button" data-action="clear">
+      <div class="calculator__controls">
+        <button class="calculator__btn calculator__btn--span" type="button" data-action="clear">
         AC
-      </button>
-      <button class="calculator__btn" type="button" data-action="delete">
-        DEL
-      </button>
-      <button class="calculator__btn" type="button" data-action="operation">
-        ÷
-      </button>
-      <button class="calculator__btn" type="button" data-action="symbol">
-        1
-      </button>
-      <button class="calculator__btn" type="button" data-action="symbol">
-        2
-      </button>
-      <button class="calculator__btn" type="button" data-action="symbol">
-        3
-      </button>
-      <button class="calculator__btn" type="button" data-action="operation">
-        x
-      </button>
-      <button class="calculator__btn" type="button" data-action="symbol">
-        4
-      </button>
-      <button class="calculator__btn" type="button" data-action="symbol">
-        5
-      </button>
-      <button class="calculator__btn" type="button" data-action="symbol">
-        6
-      </button>
-      <button class="calculator__btn" type="button" data-action="operation">
-        +
-      </button>
-      <button class="calculator__btn" type="button" data-action="symbol">
-        7
-      </button>
-      <button class="calculator__btn" type="button" data-action="symbol">
-        8
-      </button>
-      <button class="calculator__btn" type="button" data-action="symbol">
-        9
-      </button>
-      <button class="calculator__btn" type="button" data-action="operation">
-        -
-      </button>
-      <button class="calculator__btn" type="button" data-action="symbol">
-        .
-      </button>
-      <button class="calculator__btn" type="button" data-action="symbol">
-        0
-      </button>
-      <button class="calculator__btn calculator__btn--span" type="button" data-action="equals">
-        =
-      </button>
+        </button>
+        <button class="calculator__btn" type="button" data-action="delete">
+          DEL
+        </button>
+        <button class="calculator__btn" type="button" data-action="operation">
+          ÷
+        </button>
+        <button class="calculator__btn" type="button" data-action="symbol">
+          1
+        </button>
+        <button class="calculator__btn" type="button" data-action="symbol">
+          2
+        </button>
+        <button class="calculator__btn" type="button" data-action="symbol">
+          3
+        </button>
+        <button class="calculator__btn" type="button" data-action="operation">
+          x
+        </button>
+        <button class="calculator__btn" type="button" data-action="symbol">
+          4
+        </button>
+        <button class="calculator__btn" type="button" data-action="symbol">
+          5
+        </button>
+        <button class="calculator__btn" type="button" data-action="symbol">
+          6
+        </button>
+        <button class="calculator__btn" type="button" data-action="operation">
+          +
+        </button>
+        <button class="calculator__btn" type="button" data-action="symbol">
+          7
+        </button>
+        <button class="calculator__btn" type="button" data-action="symbol">
+          8
+        </button>
+        <button class="calculator__btn" type="button" data-action="symbol">
+          9
+        </button>
+        <button class="calculator__btn" type="button" data-action="operation">
+          -
+        </button>
+        <button class="calculator__btn" type="button" data-action="symbol">
+          .
+        </button>
+        <button class="calculator__btn" type="button" data-action="symbol">
+          0
+        </button>
+        <button class="calculator__btn calculator__btn--span" type="button" data-action="equals">
+          =
+        </button>
+      </div>
     </div>`
   container.innerHTML = html
   return container.firstElementChild
@@ -249,7 +253,6 @@ const handleError = (cb, msg = '') => {
     cb()
   } catch (err) {
     msg = `${msg} ${err.message} on ${err.stack}`.trim()
-    console.log(err.name)
     alert(msg)
   }
 }
