@@ -110,7 +110,7 @@ class Calculator {
           case '÷':
             return operandA / operandB
           default:
-            throw new Error(`Unsupported operator: ${operator}`)
+            throw new Error(`${ErrorMessage.OPERATOR.main} ${operator}`)
         }
       }, defaultOperand)
       .toString()
@@ -147,6 +147,9 @@ const ErrorMessage = {
   },
   ACTION: {
     main: 'Unknown action!',
+  },
+  OPERATOR: {
+    main: 'Unsupported operator:',
   },
   EXPRESSION: {
     main: 'Invalid expression!',
