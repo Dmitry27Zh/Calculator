@@ -1,6 +1,7 @@
 .calculator {
   --fz: min(4vw, 20px);
   --basic-transition: 0.3s ease-in;
+  --bg: #00ff6c;
   --screen-height: 10em;
   --screen-bg: rgba(0, 0, 0, 0.75);
   --expression-pad: 5%;
@@ -14,12 +15,13 @@
   --btn-bg: rgba(255, 255, 255, 0.75);
   --btn-bg-accent: rgba(255, 255, 255, 0.9);
   --btn-border: 1px solid #ffffff;
-  display: grid;
+  display: inline-grid;
   grid-template-columns: repeat(4, var(--btn-width));
   grid-template-rows: minmax(var(--screen-height), auto) repeat(5, var(--btn-height));
   margin: 0 auto;
   font-family: 'Gotham Rounded', sans-serif;
   font-size: var(--fz);
+  background: var(--bg);
 }
 
 .calculator__screen {
