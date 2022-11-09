@@ -22,7 +22,7 @@ class Calculator {
     this.element = element ?? createElement(isExternalScreen, container)
     this.screen = screen ?? getScreen(this.element)
     this.controls = this.element.querySelector('.calculator__controls')
-    checkScreen(this.screen)
+    checkElements(this.element, this.screen, this.controls)
   }
 
   _addListeners() {
@@ -153,15 +153,28 @@ const getScreen = (element) => {
   }
 }
 
+const checkElements = (element, screen, controls) => {
+  let errorMsg = ''
+
+  if (!element) {
+    errorMsg = 'Lacks element!'
+  } else if (!checkScreen(screen)) {
+    errorMsg = 'Lacks screen output element!'
+  } else if (!controls) {
+    errorMsg = 'Lacks controls element!'
+  }
+
+  if (errorMsg) {
+    throw new Error(errorMsg)
+  }
+}
+
 const checkScreen = (screen) => {
   const { expressionOutput, resultOutput } = screen
-
-  if (
-    !expressionOutput?.matches?.(`[data-action=${Attribute.EXPRESSION_OUTPUT}]`) &&
-    !resultOutput?.matches?.(`[data-action=${Attribute.RESULT_OUTPUT}]`)
-  ) {
-    throw new Error('Lacks screen output element!')
-  }
+  return (
+    expressionOutput?.matches?.(`[data-action=${Attribute.EXPRESSION_OUTPUT}]`) ||
+    resultOutput?.matches?.(`[data-action=${Attribute.RESULT_OUTPUT}]`)
+  )
 }
 
 const createElement = (isExternalScreen, container) => {
