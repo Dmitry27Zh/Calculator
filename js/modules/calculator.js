@@ -42,7 +42,12 @@ class Calculator {
   set expression(expression) {
     if (Reg.VALID_EXPRESSION.test(expression)) {
       this._expression = expression
-      this.screen.expressionOutput.textContent = formatExpression(this._expression)
+      const { expressionOutput } = this.screen
+
+      if (expressionOutput) {
+        expressionOutput.textContent = formatExpression(this._expression)
+      }
+
       this._setResult()
     }
   }
@@ -54,7 +59,11 @@ class Calculator {
   _setResult() {
     const { maximumFractionDigits } = this._settings
     this._result = Calculator.calculate(this.expression)
-    this.screen.resultOutput.textContent = formatResult(this.result, maximumFractionDigits)
+    const { resultOutput } = this.screen
+
+    if (resultOutput) {
+      resultOutput.textContent = formatResult(this.result, maximumFractionDigits)
+    }
   }
 
   work(action, value) {
@@ -175,11 +184,11 @@ const checkElements = (element, screen, controls) => {
   let errorMsg = ''
 
   if (!element) {
-    errorMsg = ErrorMessage.ELEMENT
+    errorMsg = ErrorMessage.ELEMENT.main
   } else if (!checkScreen(screen)) {
-    errorMsg = ErrorMessage.SCREEN
+    errorMsg = ErrorMessage.SCREEN.main
   } else if (!controls) {
-    errorMsg = ErrorMessage.CONTROLS
+    errorMsg = ErrorMessage.CONTROLS.main
   }
 
   if (errorMsg) {
@@ -189,6 +198,7 @@ const checkElements = (element, screen, controls) => {
 
 const checkScreen = (screen) => {
   const { expressionOutput, resultOutput } = screen
+
   return (
     expressionOutput?.matches?.(`[data-action=${Attribute.EXPRESSION_OUTPUT}]`) ||
     resultOutput?.matches?.(`[data-action=${Attribute.RESULT_OUTPUT}]`)
@@ -262,8 +272,8 @@ const createElement = (isExternalScreen, container) => {
         </button>
       </div>
     </div>`
-  container.innerHTML = html
-  return container.firstElementChild
+  container.insertAdjacentHTML('beforeend', html)
+  return container.lastElementChild
 }
 
 const formatExpression = (expression) => {
@@ -272,7 +282,6 @@ const formatExpression = (expression) => {
 
 const formatResult = (result, maximumFractionDigits) => {
   result = +result
-  console.log(maximumFractionDigits)
 
   return result.toLocaleString('en', {
     maximumFractionDigits,
