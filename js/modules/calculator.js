@@ -122,13 +122,13 @@ class Calculator {
         const operandB = operands.shift()
 
         switch (operator) {
-          case '+':
+          case Operators.ADD:
             return operandA + operandB
-          case '-':
+          case Operators.SUBTRACT:
             return operandA - operandB
-          case 'x':
+          case Operators.MULTIPLY:
             return operandA * operandB
-          case '÷':
+          case Operators.DIVIDE:
             return operandA / operandB
           default:
             throw new Error(`${ErrorMessage.OPERATOR.main} ${operator}`)
@@ -146,6 +146,13 @@ const Attribute = {
   EQUALS: 'equals',
   DELETE: 'delete',
   CLEAR: 'clear',
+}
+
+const Operators = {
+  ADD: '+',
+  SUBTRACT: '-',
+  MULTIPLY: 'x',
+  DIVIDE: '÷',
 }
 
 const Reg = {
@@ -235,7 +242,7 @@ const createElement = (isExternalScreen, container) => {
           DEL
         </button>
         <button class="calculator__btn" type="button" data-action="operation">
-          ÷
+          ${Operators.DIVIDE}
         </button>
         <button class="calculator__btn" type="button" data-action="symbol">
           1
@@ -247,7 +254,7 @@ const createElement = (isExternalScreen, container) => {
           3
         </button>
         <button class="calculator__btn" type="button" data-action="operation">
-          x
+          ${Operators.MULTIPLY}
         </button>
         <button class="calculator__btn" type="button" data-action="symbol">
           4
@@ -259,7 +266,7 @@ const createElement = (isExternalScreen, container) => {
           6
         </button>
         <button class="calculator__btn" type="button" data-action="operation">
-          +
+          ${Operators.ADD}
         </button>
         <button class="calculator__btn" type="button" data-action="symbol">
           7
@@ -271,7 +278,7 @@ const createElement = (isExternalScreen, container) => {
           9
         </button>
         <button class="calculator__btn" type="button" data-action="operation">
-          -
+          ${Operators.SUBTRACT}
         </button>
         <button class="calculator__btn" type="button" data-action="symbol">
           .
