@@ -23,6 +23,11 @@
   user-select: none;
 }
 
+.calculator:focus,
+.calculator:focus-within {
+  outline: 1px solid orangered;
+}
+
 .calculator__screen {
   display: flex;
   flex-direction: column;

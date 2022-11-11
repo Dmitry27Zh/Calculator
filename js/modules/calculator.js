@@ -23,6 +23,7 @@ class Calculator {
     this.screen = screen ?? getScreen(this.element)
     this.controls = this.element.querySelector('.calculator__controls')
     checkElements(this.element, this.screen, this.controls)
+    this.element.focus()
   }
 
   _addListeners() {
@@ -32,6 +33,17 @@ class Calculator {
         const value = target.textContent.trim()
         this.work(action, value)
       })
+    })
+
+    this.element.addEventListener('keydown', (e) => {
+      const { code, repeat } = e
+
+      if (repeat) {
+        return
+      }
+
+      e.preventDefault()
+      e.stopPropagation()
     })
   }
 
@@ -213,7 +225,7 @@ const createElement = (isExternalScreen, container) => {
         <div class="calculator__screen-line calculator__result" data-action="result"></div>
       </div>`
   const html = `
-    <div class="calculator">
+    <div class="calculator" tabindex="0">
       ${screen}
       <div class="calculator__controls">
         <button class="calculator__btn calculator__btn--span" type="button" data-action="clear">
