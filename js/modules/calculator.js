@@ -42,8 +42,10 @@ class Calculator {
         return
       }
 
-      e.preventDefault()
-      e.stopPropagation()
+      if (code in keycodeToValue) {
+        e.preventDefault()
+        e.stopPropagation()
+      }
     })
   }
 
@@ -149,6 +151,13 @@ const Action = {
   CLEAR: 'clear',
 }
 
+const Operator = {
+  ADD: '+',
+  SUBTRACT: '-',
+  MULTIPLY: 'x',
+  DIVIDE: '÷',
+}
+
 const Value = {
   CLEAR: 'AC',
   DELETE: 'DEL',
@@ -162,21 +171,48 @@ const Value = {
   8: '8',
   9: '9',
   0: '0',
+  ADD: Operator.ADD,
+  SUBTRACT: Operator.SUBTRACT,
+  MULTIPLY: Operator.MULTIPLY,
+  DIVIDE: Operator.DIVIDE,
   POINT: '.',
   EQUALS: '=',
-}
-
-const Operator = {
-  ADD: '+',
-  SUBTRACT: '-',
-  MULTIPLY: 'x',
-  DIVIDE: '÷',
 }
 
 const Reg = {
   VALID_EXPRESSION: /^(-?|-?\d+([.,]\d*)?|(-?\d+([.,]\d*)?[^\d.,]-?)*|(-?\d+([.,]\d*)?[^\d.,](-?\d+([.,]\d*)?)?)*)?$/,
   INVALID_EXPRESSION: /\..*,|,.*\./,
   OPERATORS_REPLACEMENT: [/([\d.,])([^\d.,])/g, '$1 $2 '],
+}
+
+const keycodeToValue = {
+  Digit0: Value[0],
+  Digit1: Value[1],
+  Digit2: Value[2],
+  Digit3: Value[3],
+  Digit4: Value[4],
+  Digit5: Value[5],
+  Digit6: Value[6],
+  Digit7: Value[7],
+  Digit8: Value[8],
+  Digit9: Value[9],
+  Period: Value.POINT,
+  Slash: Value.DIVIDE,
+  Numpad0: Value[0],
+  Numpad1: Value[1],
+  Numpad2: Value[2],
+  Numpad3: Value[3],
+  Numpad4: Value[4],
+  Numpad5: Value[5],
+  Numpad6: Value[6],
+  Numpad7: Value[7],
+  Numpad8: Value[8],
+  Numpad9: Value[9],
+  NumpadDecimal: Value.POINT,
+  NumpadAdd: Value.ADD,
+  NumpadSubtract: Value.SUBTRACT,
+  NumpadMultiply: Value.MULTIPLY,
+  NumpadDivide: Value.DIVIDE,
 }
 
 const ErrorMessage = {
@@ -256,7 +292,7 @@ const CONTROLS_MARKUP = `
       ${Value.DELETE}
     </button>
     <button class="calculator__btn" type="button" data-action="${Action.OPERATION}">
-      ${Operator.DIVIDE}
+      ${Value.DIVIDE}
     </button>
     <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
       ${Value[1]}
@@ -268,7 +304,7 @@ const CONTROLS_MARKUP = `
       ${Value[3]}
     </button>
     <button class="calculator__btn" type="button" data-action="${Action.OPERATION}">
-      ${Operator.MULTIPLY}
+      ${Value.MULTIPLY}
     </button>
     <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
       ${Value[4]}
@@ -280,7 +316,7 @@ const CONTROLS_MARKUP = `
       ${Value[6]}
     </button>
     <button class="calculator__btn" type="button" data-action="${Action.OPERATION}">
-      ${Operator.ADD}
+      ${Value.ADD}
     </button>
     <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
       ${Value[7]}
@@ -292,7 +328,7 @@ const CONTROLS_MARKUP = `
       ${Value[9]}
     </button>
     <button class="calculator__btn" type="button" data-action="${Action.OPERATION}">
-      ${Operator.SUBTRACT}
+      ${Value.SUBTRACT}
     </button>
     <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
       ${Value.POINT}
