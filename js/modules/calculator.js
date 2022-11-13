@@ -162,7 +162,7 @@ const Value = {
   8: '8',
   9: '9',
   0: '0',
-  POINT: ',',
+  POINT: '.',
   EQUALS: '=',
 }
 
@@ -181,7 +181,7 @@ const Reg = {
 
 const ErrorMessage = {
   UNKNOWN: {
-    pre: 'Please reload app! Unknown error in the Calculator',
+    pre: 'Please reload the app! Unknown error in the Calculator',
   },
   KNOWN: {
     pre: 'Please try again! Well-known error',
@@ -193,7 +193,7 @@ const ErrorMessage = {
     main: 'Lacks screen output element!',
   },
   CONTROLS: {
-    main: 'Lacks controls element!',
+    main: 'Problem with controls element!',
   },
   ACTION: {
     main: 'Unknown action!',
@@ -225,7 +225,7 @@ const checkElements = (element, screen, controls) => {
     errorMsg = ErrorMessage.ELEMENT.main
   } else if (!checkScreen(screen)) {
     errorMsg = ErrorMessage.SCREEN.main
-  } else if (!controls) {
+  } else if (!checkControls(controls)) {
     errorMsg = ErrorMessage.CONTROLS.main
   }
 
@@ -243,8 +243,71 @@ const checkScreen = (screen) => {
   )
 }
 
+const checkControls = (element) => {
+  return element?.outerHTML.replace(/\s/g, '') === CONTROLS_MARKUP.replace(/\s/g, '')
+}
+
+const CONTROLS_MARKUP = `
+  <div class="calculator__controls">
+    <button class="calculator__btn calculator__btn--span" type="button" data-action="${Action.CLEAR}">
+      ${Value.CLEAR}
+    </button>
+    <button class="calculator__btn" type="button" data-action="${Action.DELETE}">
+      ${Value.DELETE}
+    </button>
+    <button class="calculator__btn" type="button" data-action="${Action.OPERATION}">
+      ${Operator.DIVIDE}
+    </button>
+    <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
+      ${Value[1]}
+    </button>
+    <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
+      ${Value[2]}
+    </button>
+    <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
+      ${Value[3]}
+    </button>
+    <button class="calculator__btn" type="button" data-action="${Action.OPERATION}">
+      ${Operator.MULTIPLY}
+    </button>
+    <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
+      ${Value[4]}
+    </button>
+    <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
+      ${Value[5]}
+    </button>
+    <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
+      ${Value[6]}
+    </button>
+    <button class="calculator__btn" type="button" data-action="${Action.OPERATION}">
+      ${Operator.ADD}
+    </button>
+    <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
+      ${Value[7]}
+    </button>
+    <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
+      ${Value[8]}
+    </button>
+    <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
+      ${Value[9]}
+    </button>
+    <button class="calculator__btn" type="button" data-action="${Action.OPERATION}">
+      ${Operator.SUBTRACT}
+    </button>
+    <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
+      ${Value.POINT}
+    </button>
+    <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
+      ${Value[0]}
+    </button>
+    <button class="calculator__btn calculator__btn--span" type="button" data-action="${Action.EQUALS}">
+      ${Value.EQUALS}
+    </button>
+  </div>
+`
+
 const createElement = (isExternalScreen, container) => {
-  const screen = isExternalScreen
+  const screenMarkup = isExternalScreen
     ? ''
     : `<div class="calculator__screen">
         <div class="calculator__screen-line calculator__expression" data-action="${Action.EXPRESSION_OUTPUT}"></div>
@@ -252,63 +315,8 @@ const createElement = (isExternalScreen, container) => {
       </div>`
   const html = `
     <div class="calculator" tabindex="0">
-      ${screen}
-      <div class="calculator__controls">
-        <button class="calculator__btn calculator__btn--span" type="button" data-action="${Action.CLEAR}">
-          ${Value.CLEAR}
-        </button>
-        <button class="calculator__btn" type="button" data-action="${Action.DELETE}">
-          ${Value.DELETE}
-        </button>
-        <button class="calculator__btn" type="button" data-action="${Action.OPERATION}">
-          ${Operator.DIVIDE}
-        </button>
-        <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
-          ${Value[1]}
-        </button>
-        <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
-          ${Value[2]}
-        </button>
-        <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
-          ${Value[3]}
-        </button>
-        <button class="calculator__btn" type="button" data-action="${Action.OPERATION}">
-          ${Operator.MULTIPLY}
-        </button>
-        <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
-          ${Value[4]}
-        </button>
-        <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
-          ${Value[5]}
-        </button>
-        <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
-          ${Value[6]}
-        </button>
-        <button class="calculator__btn" type="button" data-action="${Action.OPERATION}">
-          ${Operator.ADD}
-        </button>
-        <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
-          ${Value[7]}
-        </button>
-        <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
-          ${Value[8]}
-        </button>
-        <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
-          ${Value[9]}
-        </button>
-        <button class="calculator__btn" type="button" data-action="${Action.OPERATION}">
-          ${Operator.SUBTRACT}
-        </button>
-        <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
-          ${Value.POINT}
-        </button>
-        <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
-          ${Value[0]}
-        </button>
-        <button class="calculator__btn calculator__btn--span" type="button" data-action="${Action.EQUALS}">
-          ${Value.EQUALS}
-        </button>
-      </div>
+      ${screenMarkup}
+      ${CONTROLS_MARKUP}
     </div>`
   container.insertAdjacentHTML('beforeend', html)
   return container.lastElementChild
