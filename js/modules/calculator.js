@@ -228,65 +228,65 @@ const createElement = (isExternalScreen, container) => {
   const screen = isExternalScreen
     ? ''
     : `<div class="calculator__screen">
-        <div class="calculator__screen-line calculator__expression" data-action="expression"></div>
-        <div class="calculator__screen-line calculator__result" data-action="result"></div>
+        <div class="calculator__screen-line calculator__expression" data-action="${Attribute.EXPRESSION_OUTPUT}"></div>
+        <div class="calculator__screen-line calculator__result" data-action="${Attribute.RESULT_OUTPUT}"></div>
       </div>`
   const html = `
     <div class="calculator" tabindex="0">
       ${screen}
       <div class="calculator__controls">
-        <button class="calculator__btn calculator__btn--span" type="button" data-action="clear">
+        <button class="calculator__btn calculator__btn--span" type="button" data-action="${Attribute.CLEAR}">
         AC
         </button>
-        <button class="calculator__btn" type="button" data-action="delete">
+        <button class="calculator__btn" type="button" data-action="${Attribute.DELETE}">
           DEL
         </button>
-        <button class="calculator__btn" type="button" data-action="operation">
+        <button class="calculator__btn" type="button" data-action="${Attribute.OPERATION}">
           ${Operators.DIVIDE}
         </button>
-        <button class="calculator__btn" type="button" data-action="symbol">
+        <button class="calculator__btn" type="button" data-action="${Attribute.SYMBOL}">
           1
         </button>
-        <button class="calculator__btn" type="button" data-action="symbol">
+        <button class="calculator__btn" type="button" data-action="${Attribute.SYMBOL}">
           2
         </button>
-        <button class="calculator__btn" type="button" data-action="symbol">
+        <button class="calculator__btn" type="button" data-action="${Attribute.SYMBOL}">
           3
         </button>
-        <button class="calculator__btn" type="button" data-action="operation">
+        <button class="calculator__btn" type="button" data-action="${Attribute.OPERATION}">
           ${Operators.MULTIPLY}
         </button>
-        <button class="calculator__btn" type="button" data-action="symbol">
+        <button class="calculator__btn" type="button" data-action="${Attribute.SYMBOL}">
           4
         </button>
-        <button class="calculator__btn" type="button" data-action="symbol">
+        <button class="calculator__btn" type="button" data-action="${Attribute.SYMBOL}">
           5
         </button>
-        <button class="calculator__btn" type="button" data-action="symbol">
+        <button class="calculator__btn" type="button" data-action="${Attribute.SYMBOL}">
           6
         </button>
-        <button class="calculator__btn" type="button" data-action="operation">
+        <button class="calculator__btn" type="button" data-action="${Attribute.OPERATION}">
           ${Operators.ADD}
         </button>
-        <button class="calculator__btn" type="button" data-action="symbol">
+        <button class="calculator__btn" type="button" data-action="${Attribute.SYMBOL}">
           7
         </button>
-        <button class="calculator__btn" type="button" data-action="symbol">
+        <button class="calculator__btn" type="button" data-action="${Attribute.SYMBOL}">
           8
         </button>
-        <button class="calculator__btn" type="button" data-action="symbol">
+        <button class="calculator__btn" type="button" data-action="${Attribute.SYMBOL}">
           9
         </button>
-        <button class="calculator__btn" type="button" data-action="operation">
+        <button class="calculator__btn" type="button" data-action="${Attribute.OPERATION}">
           ${Operators.SUBTRACT}
         </button>
-        <button class="calculator__btn" type="button" data-action="symbol">
+        <button class="calculator__btn" type="button" data-action="${Attribute.SYMBOL}">
           .
         </button>
-        <button class="calculator__btn" type="button" data-action="symbol">
+        <button class="calculator__btn" type="button" data-action="${Attribute.SYMBOL}">
           0
         </button>
-        <button class="calculator__btn calculator__btn--span" type="button" data-action="equals">
+        <button class="calculator__btn calculator__btn--span" type="button" data-action="${Attribute.EQUALS}">
           =
         </button>
       </div>
