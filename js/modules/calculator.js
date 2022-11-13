@@ -28,11 +28,13 @@ class Calculator {
 
   _addListeners() {
     this.controls.addEventListener('click', ({ target }) => {
-      handleError(() => {
-        const action = target.getAttribute('data-action')
-        const value = target.textContent.trim()
-        this.work(action, value)
-      })
+      if (target.matches('[data-action]')) {
+        handleError(() => {
+          const action = target.getAttribute('data-action')
+          const value = target.textContent.trim()
+          this.work(action, value)
+        })
+      }
     })
 
     this.element.addEventListener('keydown', (e) => {
