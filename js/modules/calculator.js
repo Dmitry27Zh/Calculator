@@ -122,13 +122,13 @@ class Calculator {
         const operandB = operands.shift()
 
         switch (operator) {
-          case Operators.ADD:
+          case Operator.ADD:
             return operandA + operandB
-          case Operators.SUBTRACT:
+          case Operator.SUBTRACT:
             return operandA - operandB
-          case Operators.MULTIPLY:
+          case Operator.MULTIPLY:
             return operandA * operandB
-          case Operators.DIVIDE:
+          case Operator.DIVIDE:
             return operandA / operandB
           default:
             throw new Error(`${ErrorMessage.OPERATOR.main} ${operator}`)
@@ -148,7 +148,24 @@ const Action = {
   CLEAR: 'clear',
 }
 
-const Operators = {
+const Value = {
+  CLEAR: 'AC',
+  DELETE: 'DEL',
+  1: '1',
+  2: '2',
+  3: '3',
+  4: '4',
+  5: '5',
+  6: '6',
+  7: '7',
+  8: '8',
+  9: '9',
+  0: '0',
+  POINT: '.',
+  EQUALS: '=',
+}
+
+const Operator = {
   ADD: '+',
   SUBTRACT: '-',
   MULTIPLY: 'x',
@@ -236,58 +253,58 @@ const createElement = (isExternalScreen, container) => {
       ${screen}
       <div class="calculator__controls">
         <button class="calculator__btn calculator__btn--span" type="button" data-action="${Action.CLEAR}">
-        AC
+          ${Value.CLEAR}
         </button>
         <button class="calculator__btn" type="button" data-action="${Action.DELETE}">
-          DEL
+          ${Value.DELETE}
         </button>
         <button class="calculator__btn" type="button" data-action="${Action.OPERATION}">
-          ${Operators.DIVIDE}
+          ${Operator.DIVIDE}
         </button>
         <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
-          1
+          ${Value[1]}
         </button>
         <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
-          2
+          ${Value[2]}
         </button>
         <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
-          3
+          ${Value[3]}
         </button>
         <button class="calculator__btn" type="button" data-action="${Action.OPERATION}">
-          ${Operators.MULTIPLY}
+          ${Operator.MULTIPLY}
         </button>
         <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
-          4
+          ${Value[4]}
         </button>
         <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
-          5
+          ${Value[5]}
         </button>
         <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
-          6
+          ${Value[6]}
         </button>
         <button class="calculator__btn" type="button" data-action="${Action.OPERATION}">
-          ${Operators.ADD}
+          ${Operator.ADD}
         </button>
         <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
-          7
+          ${Value[7]}
         </button>
         <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
-          8
+          ${Value[8]}
         </button>
         <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
-          9
+          ${Value[9]}
         </button>
         <button class="calculator__btn" type="button" data-action="${Action.OPERATION}">
-          ${Operators.SUBTRACT}
+          ${Operator.SUBTRACT}
         </button>
         <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
-          .
+          ${Value.POINT}
         </button>
         <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
-          0
+          ${Value[0]}
         </button>
         <button class="calculator__btn calculator__btn--span" type="button" data-action="${Action.EQUALS}">
-          =
+          ${Value.EQUALS}
         </button>
       </div>
     </div>`
