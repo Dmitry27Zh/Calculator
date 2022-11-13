@@ -52,8 +52,8 @@ class Calculator {
   }
 
   set expression(expression) {
-    if (Reg.VALID_EXPRESSION.test(expression)) {
-      this._expression = expression
+    if (Reg.VALID_EXPRESSION.test(expression) && !Reg.INVALID_EXPRESSION.test(expression)) {
+      this._expression = expression.replace(/[.,]/, Value.POINT)
       const { expressionOutput } = this.screen
 
       if (expressionOutput) {
@@ -103,12 +103,13 @@ class Calculator {
   }
 
   static calculate(expression) {
-    if (!Reg.VALID_EXPRESSION.test(expression)) {
+    if (!Reg.VALID_EXPRESSION.test(expression) || Reg.INVALID_EXPRESSION.test(expression)) {
       throw new Error(ErrorMessage.EXPRESSION.main)
     }
 
     expression = expression
       .replace(/\D$/, '')
+      .replace(/,/g, '.')
       .replace(...Reg.OPERATORS_REPLACEMENT)
       .trim()
     const parts = expression.split(' ')
@@ -161,7 +162,7 @@ const Value = {
   8: '8',
   9: '9',
   0: '0',
-  POINT: '.',
+  POINT: ',',
   EQUALS: '=',
 }
 
@@ -173,8 +174,9 @@ const Operator = {
 }
 
 const Reg = {
-  VALID_EXPRESSION: /^(-?|-?\d+(\.\d*)?|(-?\d+(\.\d*)?[^\d.]-?)*|(-?\d+(\.\d*)?[^\d.](-?\d+(\.\d*)?)?)*)?$/,
-  OPERATORS_REPLACEMENT: [/([\d.])([^\d.])/g, '$1 $2 '],
+  VALID_EXPRESSION: /^(-?|-?\d+([.,]\d*)?|(-?\d+([.,]\d*)?[^\d.,]-?)*|(-?\d+([.,]\d*)?[^\d.,](-?\d+([.,]\d*)?)?)*)?$/,
+  INVALID_EXPRESSION: /\..*,|,.*\./,
+  OPERATORS_REPLACEMENT: [/([\d.,])([^\d.,])/g, '$1 $2 '],
 }
 
 const ErrorMessage = {
