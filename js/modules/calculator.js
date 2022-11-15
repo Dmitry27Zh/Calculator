@@ -308,58 +308,58 @@ const checkControls = (element) => {
 
 const CONTROLS_MARKUP = `
   <div class="calculator__controls">
-    <button class="calculator__btn calculator__btn--span" type="button" data-action="${Action.CLEAR}">
+    <button class="calculator__btn calculator__btn--span" type="button" data-action="${getAction(Value.CLEAR)}">
       ${Value.CLEAR}
     </button>
-    <button class="calculator__btn" type="button" data-action="${Action.DELETE}">
+    <button class="calculator__btn" type="button" data-action="${getAction(Value.DELETE)}">
       ${Value.DELETE}
     </button>
-    <button class="calculator__btn" type="button" data-action="${Action.OPERATION}">
+    <button class="calculator__btn" type="button" data-action="${getAction(Value.DIVIDE)}">
       ${Value.DIVIDE}
     </button>
-    <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
+    <button class="calculator__btn" type="button" data-action="${getAction(Value[1])}">
       ${Value[1]}
     </button>
-    <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
+    <button class="calculator__btn" type="button" data-action="${getAction(Value[2])}">
       ${Value[2]}
     </button>
-    <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
+    <button class="calculator__btn" type="button" data-action="${getAction(Value[3])}">
       ${Value[3]}
     </button>
-    <button class="calculator__btn" type="button" data-action="${Action.OPERATION}">
+    <button class="calculator__btn" type="button" data-action="${getAction(Value.MULTIPLY)}">
       ${Value.MULTIPLY}
     </button>
-    <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
+    <button class="calculator__btn" type="button" data-action="${getAction(Value[4])}">
       ${Value[4]}
     </button>
-    <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
+    <button class="calculator__btn" type="button" data-action="${getAction(Value[5])}">
       ${Value[5]}
     </button>
-    <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
+    <button class="calculator__btn" type="button" data-action="${getAction(Value[6])}">
       ${Value[6]}
     </button>
-    <button class="calculator__btn" type="button" data-action="${Action.OPERATION}">
+    <button class="calculator__btn" type="button" data-action="${getAction(Value.ADD)}">
       ${Value.ADD}
     </button>
-    <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
+    <button class="calculator__btn" type="button" data-action="${getAction(Value[7])}">
       ${Value[7]}
     </button>
-    <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
+    <button class="calculator__btn" type="button" data-action="${getAction(Value[8])}">
       ${Value[8]}
     </button>
-    <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
+    <button class="calculator__btn" type="button" data-action="${getAction(Value[9])}">
       ${Value[9]}
     </button>
-    <button class="calculator__btn" type="button" data-action="${Action.OPERATION}">
+    <button class="calculator__btn" type="button" data-action="${getAction(Value.SUBTRACT)}">
       ${Value.SUBTRACT}
     </button>
-    <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
+    <button class="calculator__btn" type="button" data-action="${getAction(Value.POINT)}">
       ${Value.POINT}
     </button>
-    <button class="calculator__btn" type="button" data-action="${Action.SYMBOL}">
+    <button class="calculator__btn" type="button" data-action="${getAction(Value[0])}">
       ${Value[0]}
     </button>
-    <button class="calculator__btn calculator__btn--span" type="button" data-action="${Action.EQUALS}">
+    <button class="calculator__btn calculator__btn--span" type="button" data-action="${getAction(Value.EQUALS)}">
       ${Value.EQUALS}
     </button>
   </div>
