@@ -26,6 +26,15 @@ dynamicExternalBtn.addEventListener(
       { expressionOutput: dynamicExternalExpression, resultOutput: dynamicExternalResult },
       { container: dynamicExtrenalContainer }
     )
+
+    const formatter = new Intl.NumberFormat('en-EN', {
+      style: 'currency',
+      currency: 'usd',
+    })
+
+    dynamicExternalCalculator.element.addEventListener('calculationend', ({ detail: { calculator } }) => {
+      dynamicExternalResult.textContent = formatter.format(calculator.result)
+    })
   },
   {
     once: true,

@@ -6,6 +6,9 @@ class Calculator {
     this.controls = null
     this.screen = {}
     this._settings = { ...defaultSettings, ...settings }
+    this._events = {
+      calculationend: new CustomEvent('calculationend', { detail: { calculator: this } }),
+    }
     this.init(element, screen)
   }
 
@@ -106,6 +109,7 @@ class Calculator {
     }
 
     this.expression = expression
+    this.element.dispatchEvent(this._events.calculationend)
   }
 
   static calculate(expression) {
