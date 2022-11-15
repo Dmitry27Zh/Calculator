@@ -30,15 +30,20 @@ class Calculator {
   }
 
   _addListeners() {
-    this.controls.addEventListener('click', ({ target }) => {
-      if (target.matches('[data-action]')) {
-        handleError(() => {
-          const action = target.getAttribute('data-action')
-          const value = target.textContent.trim()
-          this.work(action, value)
-          this.element.focus()
-        })
+    this.controls.addEventListener('click', ({ target, pointerId }) => {
+      if (!target.matches('[data-action]')) {
+        return
       }
+
+      handleError(() => {
+        const action = target.getAttribute('data-action')
+        const value = target.textContent.trim()
+        this.work(action, value)
+
+        if (pointerId === 1) {
+          this.element.focus()
+        }
+      })
     })
 
     this.element.addEventListener('keydown', (e) => {
