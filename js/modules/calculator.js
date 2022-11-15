@@ -38,13 +38,15 @@ class Calculator {
     })
 
     this.element.addEventListener('keydown', (e) => {
-      const { code, repeat } = e
+      const { key, code, repeat } = e
 
       if (repeat) {
         return
       }
 
-      if (code in keycodeToValue) {
+      const value = keyAndCodeToValue[key] ?? keyAndCodeToValue[code]
+
+      if (value != null) {
         e.preventDefault()
         e.stopPropagation()
       }
@@ -187,7 +189,7 @@ const Reg = {
   OPERATORS_REPLACEMENT: [/([\d.,])([^\d.,])/g, '$1 $2 '],
 }
 
-const keycodeToValue = {
+const keyAndCodeToValue = {
   Digit0: Value[0],
   Digit1: Value[1],
   Digit2: Value[2],
@@ -199,6 +201,9 @@ const keycodeToValue = {
   Digit8: Value[8],
   Digit9: Value[9],
   Period: Value.POINT,
+  '+': Value.ADD,
+  '-': Value.SUBTRACT,
+  '*': Value.MULTIPLY,
   Slash: Value.DIVIDE,
   Numpad0: Value[0],
   Numpad1: Value[1],
