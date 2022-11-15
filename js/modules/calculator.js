@@ -47,6 +47,7 @@ class Calculator {
       const value = keyAndCodeToValue[key] ?? keyAndCodeToValue[code]
 
       if (value != null) {
+        const action = getAction(value)
         e.preventDefault()
         e.stopPropagation()
       }
@@ -183,6 +184,18 @@ const Value = {
   EQUALS: '=',
 }
 
+const valueToAction = {
+  [Value.CLEAR]: Action.CLEAR,
+  [Value.DELETE]: Action.DELETE,
+  [Value.ADD]: Action.OPERATION,
+  [Value.SUBTRACT]: Action.OPERATION,
+  [Value.MULTIPLY]: Action.OPERATION,
+  [Value.DIVIDE]: Action.OPERATION,
+  [Value.EQUALS]: Action.EQUALS,
+}
+
+const getAction = (value) => valueToAction[value] ?? Action.SYMBOL
+
 const Reg = {
   VALID_EXPRESSION: /^(-?|-?\d+([.,]\d*)?|(-?\d+([.,]\d*)?[^\d.,]-?)*|(-?\d+([.,]\d*)?[^\d.,](-?\d+([.,]\d*)?)?)*)?$/,
   INVALID_EXPRESSION: /\..*,|,.*\./,
@@ -204,6 +217,8 @@ const keyAndCodeToValue = {
   '+': Value.ADD,
   '-': Value.SUBTRACT,
   '*': Value.MULTIPLY,
+  '=': Value.EQUALS,
+  Equal: Value.EQUALS,
   Slash: Value.DIVIDE,
   Numpad0: Value[0],
   Numpad1: Value[1],
