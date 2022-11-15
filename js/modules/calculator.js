@@ -50,6 +50,7 @@ class Calculator {
         const action = getAction(value)
         e.preventDefault()
         e.stopPropagation()
+        this.work(action, value)
       }
     })
   }
@@ -220,6 +221,7 @@ const keyAndCodeToValue = {
   '=': Value.EQUALS,
   Equal: Value.EQUALS,
   Slash: Value.DIVIDE,
+  Backspace: Value.DELETE,
   Numpad0: Value[0],
   Numpad1: Value[1],
   Numpad2: Value[2],
