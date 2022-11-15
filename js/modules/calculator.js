@@ -33,25 +33,23 @@ class Calculator {
           const action = target.getAttribute('data-action')
           const value = target.textContent.trim()
           this.work(action, value)
+          this.element.focus()
         })
       }
     })
 
     this.element.addEventListener('keydown', (e) => {
       const { key, code, repeat } = e
+      const value = keyAndCodeToValue[key] ?? keyAndCodeToValue[code]
 
-      if (repeat) {
+      if (repeat || value == null || (key === 'Enter' && document.activeElement.matches('[data-action]'))) {
         return
       }
 
-      const value = keyAndCodeToValue[key] ?? keyAndCodeToValue[code]
-
-      if (value != null) {
-        const action = getAction(value)
-        e.preventDefault()
-        e.stopPropagation()
-        this.work(action, value)
-      }
+      const action = getAction(value)
+      e.preventDefault()
+      e.stopPropagation()
+      this.work(action, value)
     })
   }
 
@@ -220,6 +218,7 @@ const keyAndCodeToValue = {
   '*': Value.MULTIPLY,
   '=': Value.EQUALS,
   Equal: Value.EQUALS,
+  Enter: Value.EQUALS,
   Slash: Value.DIVIDE,
   Backspace: Value.DELETE,
   Numpad0: Value[0],
